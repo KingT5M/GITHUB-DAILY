@@ -2,7 +2,7 @@ name: Daily Update
 
 on:
   schedule:
-    - cron: '0 21 * * *' # This runs the action every day at midnight UTC +3
+    - cron: '0 0 * * *' # This runs the action every day at midnight 
 
 jobs:
   update-readme:
