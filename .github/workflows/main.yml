@@ -2,7 +2,7 @@ name: Daily Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # This runs the action every day at midnight 
+    - cron: '0 0 * * *' # This runs the action every day at midnight UTC+3
 
 jobs:
   update-readme:
@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Update README
         run: |
@@ -24,4 +24,6 @@ jobs:
           git commit -m "Update README with date and time: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           
       - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Uses GitHub's provided token
         run: git push origin main
