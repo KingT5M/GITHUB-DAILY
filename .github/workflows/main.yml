@@ -1,0 +1,27 @@
+name: Daily Update
+
+on:
+  schedule:
+    - cron: '0 21 * * *' # This runs the action every day at midnight UTC +3
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Update README
+        run: |
+          echo "Last updated: $(date '+%Y-%m-%d %H:%M:%S')" > README.md
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "mwanikanyi@gmail.com"
+          git config --local user.name "KingT5M"
+          git add README.md
+          git commit -m "Update README with date and time: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          
+      - name: Push changes
+        run: git push origin main
